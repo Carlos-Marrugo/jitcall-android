@@ -1,111 +1,92 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
-import { Firestore, collection, doc, serverTimestamp, setDoc, writeBatch } from '@angular/fire/firestore';
+import { Firestore, doc, setDoc, serverTimestamp } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { Preferences } from '@capacitor/preferences';
 import { ToastController, LoadingController } from '@ionic/angular/standalone';
-import { firstValueFrom, from } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { NotificacionesService } from './notificaciones.service';
 
 @Injectable({
-  providedIn: 'root',
-  useFactory: (auth: Auth, firestore: Firestore, router: Router, toastCtrl: ToastController, loadingCtrl: LoadingController, http: HttpClient) => 
-    new AutenticacionService(auth, firestore, router, toastCtrl, loadingCtrl, http),
-  deps: [Auth, Firestore, Router, ToastController, LoadingController, HttpClient]
+  providedIn: 'root'
 })
 export class AutenticacionService {
-  
-  private notificaciones = inject(NotificacionesService); 
+  private auth = inject(Auth);
+  private firestore = inject(Firestore);
+  private router = inject(Router);
+  private toastCtrl = inject(ToastController);
+  private loadingCtrl = inject(LoadingController);
+  private http = inject(HttpClient);
+  private notificaciones = inject(NotificacionesService);
 
+  async registrarUsuario(email: string, password: string, userData: any) {
+    const loading = await this.loadingCtrl.create({ message: 'Registrando...' });
+    await loading.present();
 
-  constructor(
-    private auth = inject(Auth),
-    private firestore = inject(Firestore),
-    private router = inject(Router),
-    private toastCtrl = inject(ToastController),
-    private loadingCtrl = inject(LoadingController),
-    private http = inject(HttpClient),
-  ) {}
-
-  async registrarUsuario(email: string, password: string) {
     try {
       const userCredential = await createUserWithEmailAndPassword(
-        this.auth,
-        email,
+        this.auth, 
+        email, 
         password
       );
-      
-      await this.notificaciones.registrarToken();
-      
+
+      await setDoc(doc(this.firestore, `users/${userCredential.user.uid}`), {
+        ...userData,
+        email: email,
+        fechaRegistro: serverTimestamp(),
+        lastLogin: serverTimestamp()
+      });
+
+      await this.notificaciones.inicializar();
+
+      await loading.dismiss();
       return userCredential;
     } catch (error) {
-      console.error('Error en registro:', error);
-      throw error;
+      await loading.dismiss();
+      throw this.handleAuthError(error);
     }
   }
 
   private handleAuthError(error: any): string {
     switch (error.code) {
       case 'auth/admin-restricted-operation':
-        return 'Esta operación está restringida. Contacta al administrador.';
+        return 'Operación restringida';
       case 'auth/email-already-in-use':
-        return 'Este correo ya está registrado.';
+        return 'Correo ya registrado';
       case 'auth/invalid-email':
-        return 'Correo electrónico no válido.';
+        return 'Correo inválido';
       case 'auth/weak-password':
-        return 'La contraseña debe tener al menos 6 caracteres.';
-      case 'auth/operation-not-allowed':
-        return 'Este método de autenticación no está habilitado.';
+        return 'Contraseña débil (mínimo 6 caracteres)';
       default:
-        console.error('Código de error no manejado:', error.code);
-        return 'Ocurrió un error durante el registro.';
-    }
-  }
-
-  async loginAPIExterna(email: string, password: string): Promise<void> {
-    try {
-      const response = await firstValueFrom(
-        this.http.post<{ token: string }>(
-          'https://ravishing-courtesy-production.up.railway.app/user/login',
-          { email, password }
-        )
-      );
-      await Preferences.set({ key: 'apiToken', value: response.token });
-    } catch (error) {
-      console.error('Error en login API externa:', error);
-      throw this.handleAuthError(error);
+        return 'Error durante el registro';
     }
   }
 
   async login(email: string, password: string) {
     const loading = await this.loadingCtrl.create({ message: 'Iniciando sesión...' });
     await loading.present();
-  
+
     try {
       const userCredential = await signInWithEmailAndPassword(
         this.auth,
         email,
         password
       );
-  
+      this.router.navigate(['/home']);
       await setDoc(doc(this.firestore, `users/${userCredential.user.uid}`), {
         lastLogin: serverTimestamp()
-      }, { merge: true });
-  
-      await this.notificaciones.registrarToken();
-  
+      },
+      { merge: true });
+
+      await this.notificaciones.inicializar();
+
       await loading.dismiss();
       return userCredential;
     } catch (error) {
       await loading.dismiss();
-      throw error;
+      throw this.handleAuthError(error);
     }
-  }
-
-  async estaAutenticado(): Promise<boolean> {
-    const user = this.auth.currentUser;
-    return !!user;
   }
 
   async logout() {
@@ -114,13 +95,7 @@ export class AutenticacionService {
     this.router.navigate(['/login']);
   }
 
-  private async mostrarToast(mensaje: string, color: string) {
-    const toast = await this.toastCtrl.create({
-      message: mensaje,
-      duration: 3000,
-      color: color,
-      position: 'top'
-    });
-    await toast.present();
+  async estaAutenticado(): Promise<boolean> {
+    return !!this.auth.currentUser;
   }
 }

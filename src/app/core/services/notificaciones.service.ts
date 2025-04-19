@@ -201,7 +201,6 @@ export class NotificacionesService {
           }
         )
       );
-
     } catch (error) {
       console.error('Error enviando notificación:', error);
       throw error;
@@ -259,9 +258,11 @@ export class NotificacionesService {
   }
 
   private async mostrarAlertaSolicitud(data: any) {
+    // Implementación de alerta
   }
 
   private async mostrarAlertaLlamada(data: any) {
+    // Implementación de alerta
   }
 
   async actualizarToken(): Promise<void> {
@@ -269,9 +270,7 @@ export class NotificacionesService {
   
     try {
       await PushNotifications.removeAllDeliveredNotifications();
-      
-      // Volver a registrar
-      await this.registrarToken();
+      await this.setupPushListeners();
     } catch (error) {
       console.error('Error actualizando token:', error);
     }

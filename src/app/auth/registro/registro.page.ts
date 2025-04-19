@@ -4,7 +4,11 @@ import { Router } from '@angular/router';
 import { AutenticacionService } from '../../core/services/autenticacion.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { 
+  IonHeader, IonToolbar, IonTitle, IonContent, IonItem, 
+  IonLabel, IonInput, IonButton, IonIcon, IonText, IonButtons,    
+  IonBackButton,
+} from '@ionic/angular/standalone';
 import { Network } from '@capacitor/network';
 import { LoadingController, ToastController } from '@ionic/angular/standalone';
 
@@ -14,9 +18,11 @@ import { LoadingController, ToastController } from '@ionic/angular/standalone';
   styleUrls: ['./registro.page.scss'],
   standalone: true,
   imports: [
-    IonicModule, 
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    IonHeader, IonToolbar, IonTitle, IonContent,
+    IonItem, IonLabel, IonInput, IonButton, IonIcon, IonText, IonButtons,   
+    IonBackButton,
   ]
 })
 export class RegistroPage {
@@ -35,37 +41,24 @@ export class RegistroPage {
       correo: ['', [Validators.required, Validators.email]],
       telefono: ['', [Validators.required, Validators.pattern('^[0-9]{10,15}$')]],
       contrasena: ['', [Validators.required, Validators.minLength(6)]],
-      fotoUrl: [''] // Opcional
+      fotoUrl: ['']
     });
   }
 
   async registrar() {
-    // Verificar conexión a internet
     const status = await Network.getStatus();
     if (!status.connected) {
-      const toast = await this.toastCtrl.create({
-        message: 'No hay conexión a internet. Verifica tu conexión.',
-        duration: 3000,
-        color: 'danger',
-        position: 'top'
-      });
-      await toast.present();
+      await this.mostrarToast('No hay conexión a internet', 'danger');
       return;
     }
 
     if (this.formularioRegistro.invalid) {
-      const toast = await this.toastCtrl.create({
-        message: 'Por favor completa todos los campos correctamente',
-        duration: 3000,
-        color: 'warning',
-        position: 'top'
-      });
-      await toast.present();
+      await this.mostrarToast('Complete todos los campos', 'warning');
       return;
     }
 
     const loading = await this.loadingCtrl.create({
-      message: 'Creando tu cuenta...',
+      message: 'Creando cuenta...',
       spinner: 'crescent'
     });
     await loading.present();
@@ -73,43 +66,33 @@ export class RegistroPage {
     try {
       const formValue = this.formularioRegistro.value;
       
-      // Registrar con email/password
       await this.authService.registrarUsuario(
         formValue.correo, 
         formValue.contrasena,
         {
           nombre: formValue.nombre,
           apellido: formValue.apellido,
-          email: formValue.correo,
           telefono: formValue.telefono,
           fotoUrl: formValue.fotoUrl || ''
         }
       );
 
-      // Navegar a home y mostrar mensaje de éxito
+      await this.mostrarToast('¡Registro exitoso!', 'success');
       this.router.navigate(['/home']);
-      const toast = await this.toastCtrl.create({
-        message: '¡Registro exitoso! Bienvenido/a',
-        duration: 3000,
-        color: 'success',
-        position: 'top'
-      });
-      await toast.present();
-
     } catch (error: any) {
-      console.error('Error en registro:', error);
-      
-      // El servicio ya maneja los toasts de error, pero podemos agregar uno adicional
-      const toast = await this.toastCtrl.create({
-        message: error.message || 'Ocurrió un error durante el registro',
-        duration: 3000,
-        color: 'danger',
-        position: 'top'
-      });
-      await toast.present();
-
+      await this.mostrarToast(error || 'Error en registro', 'danger');
     } finally {
       await loading.dismiss();
     }
+  }
+
+  private async mostrarToast(mensaje: string, color: string) {
+    const toast = await this.toastCtrl.create({
+      message: mensaje,
+      duration: 3000,
+      color: color,
+      position: 'top'
+    });
+    await toast.present();
   }
 }

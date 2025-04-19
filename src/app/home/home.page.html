@@ -13,19 +13,21 @@
 </ion-header>
 
 <ion-content>
-  <!-- Lista de contactos reactiva -->
   <ion-list>
-    @for (contacto of contactos$ | async; track contacto.id) {
+    @for (contacto of contactos$ | async; track trackByContacto($index, contacto)) {
       <ion-item>
         <ion-avatar slot="start">
-          <img [src]="contacto.fotoUrl || 'assets/avatar-default.png'" alt="Avatar de {{contacto.nombre}}">
+          <img [src]="contacto.fotoUrl || 'assets/avatar-default.png'" 
+               [alt]="'Avatar de ' + contacto.nombre">
         </ion-avatar>
         
         <ion-label>
           <h2>{{ contacto.nombre }} {{ contacto.apellido || '' }}</h2>
           <p>{{ contacto.telefono }}</p>
           @if (contacto.esMutuo) {
-            <p class="mutual-badge">Contacto mutuo</p>
+            <ion-note color="success">Contacto mutuo</ion-note>
+          } @else {
+            <ion-note color="warning">Esperando confirmación</ion-note>
           }
         </ion-label>
 
@@ -40,7 +42,6 @@
     }
   </ion-list>
 
-  <!-- Botón flotante alternativo para agregar contacto -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="navegarAAgregar()" color="primary">
       <ion-icon name="add"></ion-icon>

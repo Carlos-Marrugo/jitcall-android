@@ -21,7 +21,8 @@ export class LoginPage {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AutenticacionService
+    private authService: AutenticacionService,
+    private router: Router
   ) {}
 
   async login() {
@@ -29,7 +30,8 @@ export class LoginPage {
       try {
         const { correo, contrasena } = this.formularioLogin.value;
         await this.authService.login(correo!, contrasena!);
-        this.formularioLogin.reset(); 
+        this.formularioLogin.reset();
+        this.router.navigate(['/home']); 
       } catch (error) {
         console.error('Error en login:', error);
       }
