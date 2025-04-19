@@ -26,6 +26,7 @@ export class NotificacionesService {
   private auth = inject(Auth);
   private router = inject(Router);
   
+  private readonly NOTIFICATIONS_API = 'https://ravishing-courtesy-production.up.railway.app/notifications';
   private apiToken: string | null = null;
 
   async inicializar() {
@@ -258,11 +259,9 @@ export class NotificacionesService {
   }
 
   private async mostrarAlertaSolicitud(data: any) {
-    // Implementación de alerta
   }
 
   private async mostrarAlertaLlamada(data: any) {
-    // Implementación de alerta
   }
 
   async actualizarToken(): Promise<void> {
@@ -275,4 +274,6 @@ export class NotificacionesService {
       console.error('Error actualizando token:', error);
     }
   }
+
+  
 }
