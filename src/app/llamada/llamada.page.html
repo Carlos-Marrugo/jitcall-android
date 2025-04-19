@@ -1,0 +1,21 @@
+<!-- llamada.page.html -->
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Llamada en curso</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="finalizarLlamada()">
+        <ion-icon name="call" color="danger"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="jitsi-container" style="width: 100%; height: 100%;"></div>
+  
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button color="danger" (click)="finalizarLlamada()">
+      <ion-icon name="call"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

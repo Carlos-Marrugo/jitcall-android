@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Mis Contactos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/solicitudes">
+        <ion-icon name="mail-unread" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    @for (contacto of contactos$ | async; track contacto.id) {
+      <ion-item>
+        <ion-avatar slot="start">
+          <img [src]="contacto.fotoUrl || 'assets/avatar-default.png'">
+        </ion-avatar>
+        
+        <ion-label>
+          <h2>{{ contacto.nombre }}</h2>
+          <p>{{ contacto.telefono }}</p>
+          @if (contacto.esMutuo) {
+            <ion-note color="success">Contacto mutuo</ion-note>
+          } @else {
+            <ion-note color="warning">Esperando confirmación</ion-note>
+          }
+        </ion-label>
+
+        <ion-button slot="end" (click)="iniciarLlamada(contacto)">
+          <ion-icon name="call"></ion-icon>
+        </ion-button>
+      </ion-item>
+    }
+  </ion-list>
+</ion-content>

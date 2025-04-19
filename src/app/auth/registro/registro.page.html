@@ -1,0 +1,131 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Registro</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="form-container">
+    <form [formGroup]="formularioRegistro" (ngSubmit)="registrar()">
+      <!-- Nombre -->
+      <ion-item fill="outline" class="ion-margin-bottom">
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input 
+          formControlName="nombre" 
+          type="text"
+          autocomplete="given-name"
+          required>
+        </ion-input>
+      </ion-item>
+      @if (formularioRegistro.get('nombre')?.invalid && formularioRegistro.get('nombre')?.touched) {
+        <ion-text color="danger" class="validation-message">
+          <small>Por favor ingresa tu nombre</small>
+        </ion-text>
+      }
+
+      <!-- Apellido -->
+      <ion-item fill="outline" class="ion-margin-bottom">
+        <ion-label position="floating">Apellido</ion-label>
+        <ion-input 
+          formControlName="apellido" 
+          type="text"
+          autocomplete="family-name"
+          required>
+        </ion-input>
+      </ion-item>
+      @if (formularioRegistro.get('apellido')?.invalid && formularioRegistro.get('apellido')?.touched) {
+        <ion-text color="danger" class="validation-message">
+          <small>Por favor ingresa tu apellido</small>
+        </ion-text>
+      }
+
+      <!-- Correo -->
+      <ion-item fill="outline" class="ion-margin-bottom">
+        <ion-label position="floating">Correo Electrónico</ion-label>
+        <ion-input 
+          formControlName="correo" 
+          type="email"
+          autocomplete="email"
+          required>
+        </ion-input>
+      </ion-item>
+      @if (formularioRegistro.get('correo')?.invalid && formularioRegistro.get('correo')?.touched) {
+        <ion-text color="danger" class="validation-message">
+          <small>
+            @if (formularioRegistro.get('correo')?.errors?.['required']) {
+              Correo requerido
+            }
+            @if (formularioRegistro.get('correo')?.errors?.['email']) {
+              Ingresa un correo válido
+            }
+          </small>
+        </ion-text>
+      }
+
+      <!-- Teléfono -->
+      <ion-item fill="outline" class="ion-margin-bottom">
+        <ion-label position="floating">Teléfono</ion-label>
+        <ion-input 
+          formControlName="telefono" 
+          type="tel"
+          autocomplete="tel"
+          required>
+        </ion-input>
+      </ion-item>
+      @if (formularioRegistro.get('telefono')?.invalid && formularioRegistro.get('telefono')?.touched) {
+        <ion-text color="danger" class="validation-message">
+          <small>
+            @if (formularioRegistro.get('telefono')?.errors?.['required']) {
+              Teléfono requerido
+            }
+            @if (formularioRegistro.get('telefono')?.errors?.['pattern']) {
+              Ingresa un número válido (10-15 dígitos)
+            }
+          </small>
+        </ion-text>
+      }
+
+      <!-- Contraseña -->
+      <ion-item fill="outline" class="ion-margin-bottom">
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input 
+          formControlName="contrasena" 
+          type="password"
+          autocomplete="new-password"
+          required>
+        </ion-input>
+      </ion-item>
+      @if (formularioRegistro.get('contrasena')?.invalid && formularioRegistro.get('contrasena')?.touched) {
+        <ion-text color="danger" class="validation-message">
+          <small>
+            @if (formularioRegistro.get('contrasena')?.errors?.['required']) {
+              Contraseña requerida
+            }
+            @if (formularioRegistro.get('contrasena')?.errors?.['minLength']) {
+              Mínimo 6 caracteres
+            }
+          </small>
+        </ion-text>
+      }
+
+      <!-- Botón de Registro -->
+      <ion-button 
+        type="submit" 
+        expand="block" 
+        shape="round"
+        [disabled]="formularioRegistro.invalid"
+        class="ion-margin-top">
+        <ion-icon slot="start" name="person-add"></ion-icon>
+        Registrarse
+      </ion-button>
+
+      <!-- Enlace a Login -->
+      <ion-text class="ion-text-center ion-margin-top">
+        <p>¿Ya tienes cuenta? <a routerLink="/login">Inicia sesión</a></p>
+      </ion-text>
+    </form>
+  </div>
+</ion-content>

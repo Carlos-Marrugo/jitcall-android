@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Mis Contactos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-tabs>
+    <ion-tab-bar slot="top">
+      <ion-tab-button tab="lista" (click)="activeTab = 'lista'">
+        <ion-icon name="list"></ion-icon>
+        <ion-label>Lista</ion-label>
+      </ion-tab-button>
+      
+      <ion-tab-button tab="agregar" (click)="activeTab = 'agregar'">
+        <ion-icon name="add"></ion-icon>
+        <ion-label>Agregar</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+
+  <div *ngIf="activeTab === 'lista'">
+    <app-lista-contactos></app-lista-contactos>
+  </div>
+
+  <div *ngIf="activeTab === 'agregar'">
+    <app-agregar-contacto></app-agregar-contacto>
+  </div>
+</ion-content>

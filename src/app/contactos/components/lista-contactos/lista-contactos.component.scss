@@ -1,0 +1,37 @@
+ion-avatar {
+    width: 40px;
+    height: 40px;
+    
+    img {
+      object-fit: cover;
+    }
+  }
+  
+  ion-item {
+    --padding-start: 10px;
+    --padding-end: 10px;
+  }
+  
+  ion-label {
+    margin: 8px 0;
+    
+    h2 {
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    
+    p {
+      color: var(--ion-color-medium);
+    }
+  }
+  
+  ion-note {
+    font-size: 0.8rem;
+    display: block;
+    margin-top: 4px;
+  }
+  
+  ion-button {
+    --padding-start: 8px;
+    --padding-end: 8px;
+  }

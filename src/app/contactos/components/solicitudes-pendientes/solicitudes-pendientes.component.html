@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Solicitudes Pendientes</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let solicitud of solicitudes">
+      <ion-avatar slot="start">
+        <img [src]="solicitud.fotoUrl || 'assets/avatar-default.png'">
+      </ion-avatar>
+      
+      <ion-label>
+        <h2>{{ solicitud.nombre }}</h2>
+        <p>{{ solicitud.telefono }}</p>
+        <p>Quiere agregarte como contacto</p>
+      </ion-label>
+
+      <ion-button slot="end" color="success" (click)="aceptarSolicitud(solicitud)">
+        <ion-icon name="checkmark"></ion-icon>
+      </ion-button>
+      
+      <ion-button slot="end" color="danger" (click)="rechazarSolicitud(solicitud.id)">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+    <ion-item *ngIf="solicitudes.length === 0">
+      <ion-label class="ion-text-center">No hay solicitudes pendientes</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

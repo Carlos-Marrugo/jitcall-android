@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Mis Contactos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out" slot="icon-only"></ion-icon>
+      </ion-button>
+      <ion-button routerLink="/agregar-contacto">
+        <ion-icon name="add" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Lista de contactos reactiva -->
+  <ion-list>
+    @for (contacto of contactos$ | async; track contacto.id) {
+      <ion-item>
+        <ion-avatar slot="start">
+          <img [src]="contacto.fotoUrl || 'assets/avatar-default.png'" alt="Avatar de {{contacto.nombre}}">
+        </ion-avatar>
+        
+        <ion-label>
+          <h2>{{ contacto.nombre }} {{ contacto.apellido || '' }}</h2>
+          <p>{{ contacto.telefono }}</p>
+          @if (contacto.esMutuo) {
+            <p class="mutual-badge">Contacto mutuo</p>
+          }
+        </ion-label>
+
+        <ion-button slot="end" (click)="iniciarLlamada(contacto)" fill="clear">
+          <ion-icon name="call" color="primary"></ion-icon>
+        </ion-button>
+      </ion-item>
+    } @empty {
+      <ion-item>
+        <ion-label class="ion-text-center">No tienes contactos aún</ion-label>
+      </ion-item>
+    }
+  </ion-list>
+
+  <!-- Botón flotante alternativo para agregar contacto -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="navegarAAgregar()" color="primary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
