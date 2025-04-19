@@ -4,9 +4,9 @@ Aplicación móvil desarrollada con Ionic y Angular que permite gestionar contac
 🛠 Tecnologías Utilizadas
 Frontend:
 
-Ionic 7
+Ionic 
 
-Angular 16
+Angular 
 
 Standalone Components
 
@@ -68,13 +68,6 @@ Verifica estado de autenticación
 
 Integrado con Firebase Auth
 
-ContactosService
-Gestión completa de contactos
-
-Estado reactivo con BehaviorSubject
-
-Operaciones CRUD con Firestore
-
 NotificacionesService
 Configuración de push notifications
 
@@ -101,7 +94,6 @@ Logout limpia sesión y redirige a login
 
 📦 Dependencias Principales
 json
-Copy
 "@angular/fire": "^7.6.0",
 "@ionic/angular": "^7.1.1",
 "firebase": "^9.23.0",
@@ -118,15 +110,3 @@ ion-fab - Botones flotantes
 ion-avatar - Avatares de usuario
 
 ion-input - Campos de formulario
-
-🚧 Próximas Mejoras
-Video llamadas WebRTC
-
-Mensajería instantánea
-
-Sincronización con contactos del dispositivo
-
-Dark mode
-
-📄 Licencia
-MIT License - Libre uso y modificación
