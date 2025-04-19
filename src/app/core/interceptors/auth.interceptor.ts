@@ -21,20 +21,17 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private async handleRequest(request: HttpRequest<any>, next: HttpHandler): Promise<Observable<HttpEvent<any>>> {
-    // 1. Obtener token de Firebase
     let firebaseToken: string | null = null;
     if (request.url.includes('firestore.googleapis.com')) {
       firebaseToken = await this.auth.currentUser?.getIdToken() || null;
     }
 
-    // 2. Obtener token del servidor externo
     let apiToken: string | null = null;
     if (request.url.includes('ravishing-courtesy-production.up.railway.app')) {
       const { value } = await Preferences.get({ key: 'apiToken' });
       apiToken = value;
     }
 
-    // 3. Clonar request con headers
     let headers = new HttpHeaders();
     if (firebaseToken) {
       headers = headers.set('Authorization', `Bearer ${firebaseToken}`);

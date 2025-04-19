@@ -14,6 +14,7 @@ import { Auth } from '@angular/fire/auth';
 import { lastValueFrom } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
 import { Router } from '@angular/router';
+import { Preferences } from '@capacitor/preferences';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +44,6 @@ export class NotificacionesService {
 
       await PushNotifications.register();
 
-      // Listener para cuando se obtiene el token
       PushNotifications.addListener('registration', async (token: Token) => {
         await this.guardarTokenEnFirestore(token.value);
         await Preferences.set({ key: 'fcmToken', value: token.value });
@@ -155,7 +155,6 @@ export class NotificacionesService {
 
   async enviarNotificacionContacto(destinatarioId: string, remitenteInfo: any) {
     try {
-      // 1. Obtener token del destinatario
       const destinatarioDoc = await getDoc(doc(this.firestore, `users/${destinatarioId}`));
       const destinatarioData = destinatarioDoc.data();
       
@@ -163,7 +162,6 @@ export class NotificacionesService {
         throw new Error('Usuario no tiene token FCM registrado');
       }
 
-      // 2. Login en API externa si no tenemos token
       if (!this.apiToken) {
         const loginRes: any = await lastValueFrom(
           this.http.post(`${environment.notificationApi.baseUrl}/user/login`, {
@@ -174,7 +172,6 @@ export class NotificacionesService {
         this.apiToken = loginRes.token;
       }
 
-      // 3. Preparar payload según requerimientos
       const payload = {
         token: destinatarioData['fcmToken'],
         notification: {
@@ -193,7 +190,6 @@ export class NotificacionesService {
         }
       };
 
-      // 4. Enviar a API externa
       await lastValueFrom(
         this.http.post(
           `${environment.notificationApi.baseUrl}/notifications`,
@@ -263,18 +259,15 @@ export class NotificacionesService {
   }
 
   private async mostrarAlertaSolicitud(data: any) {
-    // Implementa tu lógica para mostrar alerta
   }
 
   private async mostrarAlertaLlamada(data: any) {
-    // Implementa tu lógica para mostrar alerta
   }
 
   async actualizarToken(): Promise<void> {
     if (!this.platform.is('capacitor')) return;
   
     try {
-      // Eliminar token antiguo para forzar regeneración
       await PushNotifications.removeAllDeliveredNotifications();
       
       // Volver a registrar

@@ -16,7 +16,7 @@ import { NotificacionesService } from './notificaciones.service';
 })
 export class AutenticacionService {
   
-  private notificaciones = inject(NotificacionesService); // Añadir esta línea
+  private notificaciones = inject(NotificacionesService); 
 
 
   constructor(
@@ -36,7 +36,6 @@ export class AutenticacionService {
         password
       );
       
-      // Registrar el token después del registro exitoso
       await this.notificaciones.registrarToken();
       
       return userCredential;
@@ -46,7 +45,6 @@ export class AutenticacionService {
     }
   }
 
-  // Nuevo método mejorado de manejo de errores
   private handleAuthError(error: any): string {
     switch (error.code) {
       case 'auth/admin-restricted-operation':
@@ -85,19 +83,16 @@ export class AutenticacionService {
     await loading.present();
   
     try {
-      // 1. Iniciar sesión
       const userCredential = await signInWithEmailAndPassword(
         this.auth,
         email,
         password
       );
   
-      // 2. Actualizar lastLogin
       await setDoc(doc(this.firestore, `users/${userCredential.user.uid}`), {
         lastLogin: serverTimestamp()
       }, { merge: true });
   
-      // 3. Registrar/actualizar token FCM
       await this.notificaciones.registrarToken();
   
       await loading.dismiss();

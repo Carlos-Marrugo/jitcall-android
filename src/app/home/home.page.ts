@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Importa CommonModule para el pipe async
+import { CommonModule } from '@angular/common'; 
 import { Auth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { 
   IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonButton, IonIcon, IonFab, IonFabButton, IonLabel,
-  IonList, IonItem, IonAvatar // Agrega estos componentes
+  IonList, IonItem, IonAvatar
 } from '@ionic/angular/standalone';
 import { ListaContactosComponent } from '../contactos/components/lista-contactos/lista-contactos.component';
 import { ContactosService } from '../core/services/contacto.service';
@@ -15,12 +15,12 @@ import { ContactosService } from '../core/services/contacto.service';
   styleUrls: ['home.page.scss'],
   standalone: true,
   imports: [
-    CommonModule, // Necesario para el pipe async
+    CommonModule, 
     IonHeader, IonToolbar, IonTitle, IonContent, 
     IonButtons, IonButton, IonIcon,
     IonFab, IonFabButton,
     ListaContactosComponent, IonLabel,
-    IonList, IonItem, IonAvatar // Agrega estos componentes
+    IonList, IonItem, IonAvatar 
   ]
 })
 export class HomePage {
@@ -42,6 +42,5 @@ export class HomePage {
   }
 
   iniciarLlamada(contacto: any) {
-    // Implementa o usa tu servicio de llamadas
   }
 }
