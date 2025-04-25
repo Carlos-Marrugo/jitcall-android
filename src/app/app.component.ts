@@ -1,44 +1,28 @@
-import { Component, inject } from '@angular/core';
-import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
-import { addIcons } from 'ionicons';
-import { 
-  PushNotifications,
-  PushNotificationSchema,
-  ActionPerformed,
-  Token
-} from '@capacitor/push-notifications';
-import { Platform } from '@ionic/angular';
-import { AlertController } from '@ionic/angular/standalone';
-
-import { 
-  logOutOutline, 
-  add, 
-  arrowBack, 
-  personCircle, 
-  videocam,
-  close,
-  notifications
-} from 'ionicons/icons';
-import { Router } from '@angular/router';
-import { Capacitor } from '@capacitor/core';
-import { NotificacionesService } from './core/services/notificaciones.service';
+import { Component } from '@angular/core';
+import { SwalService } from '@shared/services/swal/swal.service';
+import { CapacitorService } from '@core/services/capacitor/capacitor.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
-  standalone: true,
-  imports: [IonApp, IonRouterOutlet]
-})
-export class AppComponent {
-  private notificaciones = inject(NotificacionesService);
-  
-  constructor() {
-    this.inicializarNotificaciones();
-  }
 
-  private inicializarNotificaciones() {
-    this.notificaciones.setupPushListeners();
-    this.notificaciones.configurarCanalesAndroid();
-    this.notificaciones.verificarTokenExistente();
-  }
+	selector: 'app-root',
+	templateUrl: 'app.component.html',
+	styleUrls: ['app.component.scss'],
+	standalone: false
+
+}) export class AppComponent {
+
+	public constructor(private capacitorService: CapacitorService, private swalService: SwalService) {
+
+		this.capacitorService.notificationReceived$.subscribe({
+
+			next: (t) => {
+
+				
+
+			}, error: (e) => this.swalService.showException('Error', e.message)
+
+		});
+
+	}
+
 }

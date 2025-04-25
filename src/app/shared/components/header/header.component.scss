@@ -1,0 +1,100 @@
+ion-toolbar {
+    --background: linear-gradient(to right, #6e45e2 0%, #89d4cf 100%);
+    --color: white;
+    --border-width: 0;
+    --padding-top: 8px;
+    --padding-bottom: 8px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    
+    .back-button {
+        --padding-start: 8px;
+        --padding-end: 8px;
+        --color: white;
+        --background-hover: rgba(255, 255, 255, 0.1);
+        --border-radius: 50%;
+        
+        ion-icon {
+            font-size: 1.6em;
+            transition: transform 0.2s ease;
+        }
+        
+        &:hover {
+            ion-icon {
+                transform: translateX(-2px);
+            }
+        }
+    }
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: white;
+    letter-spacing: 0.3px;
+}
+
+.user-avatar {
+    width: 44px;
+    height: 44px;
+    
+    img {
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        padding: 2px;
+        background: white;
+    }
+}
+
+ion-title {
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+    text-align: center;
+    padding: 0 16px;
+}
+
+ion-button {
+    --color: white;
+    --padding-start: 8px;
+    --padding-end: 8px;
+    --background-hover: rgba(255, 255, 255, 0.1);
+    --border-radius: 50%;
+    transition: transform 0.2s ease;
+    
+    ion-icon {
+        font-size: 1.6rem;
+        transition: all 0.2s ease;
+    }
+    
+    &:hover {
+        transform: translateY(-2px);
+        
+        ion-icon {
+            color: white;
+        }
+    }
+}
+
+app-user-card {
+    position: absolute;
+    right: 16px;
+    top: 60px;
+    z-index: 1000;
+    transform: translateY(-20px) scale(0.95);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
+    
+    &.show {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}

@@ -1,0 +1,55 @@
+<ion-header>
+
+	<ion-toolbar>
+
+		@if (showBackButton){
+
+			<ion-buttons slot="start">
+
+				<ion-button (click)="goBack()" fill="empty" class="back-button">
+
+					<ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+
+				</ion-button>
+
+			</ion-buttons>
+
+		}
+
+		<ion-title>{{title}}</ion-title>
+		
+		<ion-buttons slot="end">
+
+			<div class="user-info">
+
+				<span class="user-name">{{ user?.name }} {{ user?.surname }}</span>
+				
+				<ion-button fill="clear" (click)="logout()">
+
+					<ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+
+				</ion-button>
+
+				@if (user){
+
+					<ion-avatar class="user-avatar" (click)="toggleExpansion($event)">
+
+						<img [src]="user.picture">
+
+					</ion-avatar>
+
+				}
+
+			</div>
+
+		</ion-buttons>
+
+	</ion-toolbar>
+
+</ion-header>
+
+@if (isExpanded && user){
+
+	<app-user-card [user] = "user" (click) = "toggleExpansion($event)"></app-user-card>
+
+}

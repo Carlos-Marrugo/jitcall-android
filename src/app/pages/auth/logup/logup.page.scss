@@ -1,0 +1,203 @@
+:host {
+	--ion-background-color: linear-gradient(145deg, #f3f6fd 0%, #eef2fb 100%);
+	transition: background 0.5s ease;
+  }
+  
+  .auth-card {
+	max-width: 480px;
+	margin: 2.5rem auto;
+	border-radius: 18px;
+	background: rgba(255, 255, 255, 0.98);
+	box-shadow: 
+	  0 12px 24px -6px rgba(0, 0, 0, 0.03),
+	  0 4px 12px -4px rgba(0, 0, 0, 0.02);
+	border: 1px solid rgba(255, 255, 255, 0.4);
+	backdrop-filter: blur(8px);
+	overflow: hidden;
+	transform: translateY(0);
+	transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+	position: relative;
+	
+	&:hover {
+	  transform: translateY(-4px);
+	  box-shadow: 
+		0 16px 32px -8px rgba(0, 0, 0, 0.08),
+		0 8px 16px -4px rgba(0, 0, 0, 0.04);
+	}
+	
+	&::after {
+	  content: '';
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 5px;
+	  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+	}
+  }
+  
+  /* Input fields with floating label effect */
+  ion-input {
+	--background: rgba(255, 255, 255, 0.9);
+	--border-radius: 12px;
+	--padding-start: 16px;
+	--padding-end: 16px;
+	--padding-top: 14px;
+	--padding-bottom: 14px;
+	--border: 1px solid rgba(0, 0, 0, 0.06);
+	margin-bottom: 1.5rem;
+	--color: #2d3748;
+	--placeholder-opacity: 0.6;
+	transition: all 0.3s ease;
+	
+	&.ion-focused {
+	  --border: 1px solid #667eea;
+	  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.12);
+	  transform: translateY(-1px);
+	}
+  }
+  
+  /* Enhanced buttons with gradient and hover effect */
+  ion-button {
+	--border-radius: 12px;
+	--padding-top: 18px;
+	--padding-bottom: 18px;
+	font-weight: 600;
+	letter-spacing: 0.3px;
+	--box-shadow: 0 4px 12px rgba(102, 126, 234, 0.18);
+	--background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	--background-activated: linear-gradient(135deg, #5a6fd1 0%, #684392 100%);
+	--background-hover: linear-gradient(135deg, #7288f0 0%, #8653b2 100%);
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	height: 52px;
+	margin-top: 0.5rem;
+	
+	&:hover {
+	  --box-shadow: 0 6px 16px rgba(102, 126, 234, 0.25);
+	  transform: translateY(-2px);
+	}
+	
+	&:active {
+	  transform: translateY(0);
+	}
+  }
+  
+  /* Styled notes with icon */
+  ion-note {
+	display: block;
+	font-size: 0.85rem;
+	margin: -0.8rem 0 1.2rem 0;
+	color: #718096;
+	position: relative;
+	padding-left: 1.8rem;
+	line-height: 1.5;
+	
+	&::before {
+	  content: 'ⓘ';
+	  position: absolute;
+	  left: 0;
+	  top: 0.1rem;
+	  font-size: 0.8rem;
+	  color: #667eea;
+	}
+  }
+  
+  /* Dark Mode Adaptations */
+  @media (prefers-color-scheme: dark) {
+	:host {
+	  --ion-background-color: linear-gradient(145deg, #121212 0%, #1a1a2e 100%);
+	}
+	
+	.auth-card {
+	  background: rgba(26, 32, 44, 0.95);
+	  border: 1px solid rgba(255, 255, 255, 0.08);
+	  box-shadow: 
+		0 12px 24px -6px rgba(0, 0, 0, 0.2),
+		0 4px 12px -4px rgba(0, 0, 0, 0.15);
+	}
+	
+	ion-input {
+	  --background: rgba(45, 55, 72, 0.8);
+	  --border: 1px solid rgba(255, 255, 255, 0.1);
+	  --color: #f7fafc;
+	  --placeholder-color: #a0aec0;
+	  
+	  &.ion-focused {
+		--border: 1px solid #7f9cf5;
+		box-shadow: 0 0 0 3px rgba(127, 156, 245, 0.15);
+	  }
+	}
+	
+	ion-note {
+	  color: #a0aec0;
+	  
+	  &::before {
+		color: #7f9cf5;
+	  }
+	}
+  }
+  
+  /* Additional UI Enhancements */
+  .auth-header {
+	text-align: center;
+	padding: 2rem 0 1rem;
+	
+	ion-icon {
+	  font-size: 2.5rem;
+	  color: #667eea;
+	  margin-bottom: 1rem;
+	  background: rgba(102, 126, 234, 0.1);
+	  padding: 1rem;
+	  border-radius: 50%;
+	}
+	
+	h2 {
+	  margin: 0.5rem 0 0;
+	  font-size: 1.6rem;
+	  font-weight: 700;
+	  color: #2d3748;
+	  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	  -webkit-background-clip: text;
+	  background-clip: text;
+	  color: transparent;
+	}
+	
+	p {
+	  color: #718096;
+	  font-size: 0.95rem;
+	  margin: 0.5rem 2rem;
+	}
+  }
+  
+  /* Form footer links */
+  .form-footer {
+	text-align: center;
+	margin-top: 1.5rem;
+	font-size: 0.9rem;
+	
+	a {
+	  color: #667eea;
+	  text-decoration: none;
+	  font-weight: 500;
+	  position: relative;
+	  padding: 0.3rem 0;
+	  
+	  &::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 1px;
+		background: currentColor;
+		transform: scaleX(0);
+		transform-origin: right;
+		transition: transform 0.3s ease;
+	  }
+	  
+	  &:hover::after {
+		transform: scaleX(1);
+		transform-origin: left;
+	  }
+	}
+  }

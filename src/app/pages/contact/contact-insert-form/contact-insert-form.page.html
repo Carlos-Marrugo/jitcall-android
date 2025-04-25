@@ -1,0 +1,97 @@
+<app-loading></app-loading>
+
+<app-header title = "New Contact" [showBackButton] = "true"></app-header>
+
+<ion-content class="ion-padding">
+
+	<form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+
+		<ion-list lines="none">
+
+			<ion-item>
+
+				<ion-input label="Name" formControlName="name" placeholder="Jhon"required></ion-input>
+
+			</ion-item>
+
+			@if (contactForm.get('name')?.invalid && contactForm.get('name')?.touched) {
+
+				<ion-note color="danger" class="ion-padding-start">
+
+					@if (contactForm.get('name')?.errors?.['required']) {
+
+						<div>Name is required</div>
+					}
+
+					@if (contactForm.get('name')?.errors?.['minlength']) {
+
+						<div>Minimum 3 characters</div>
+
+					}
+
+				</ion-note>
+
+			}
+
+			<ion-item>
+
+				<ion-input label="Surname" formControlName="surname" placeholder="Doe"required></ion-input>
+
+			</ion-item>
+
+			@if (contactForm.get('surname')?.invalid && contactForm.get('surname')?.touched) {
+
+				<ion-note color="danger" class="ion-padding-start">
+					Surname is required
+				</ion-note>
+
+			}
+
+			<ion-item>
+
+				<ion-input label="Contact" formControlName="contact" type="tel" placeholder="3001234567"required></ion-input>
+
+			</ion-item>
+
+			@if (contactForm.get('contact')?.invalid && contactForm.get('contact')?.touched) {
+
+				<ion-note color="danger" class="ion-padding-start">
+					Invalid format (10 digits)
+				</ion-note>
+
+			}
+
+			<ion-item>
+
+				<ion-input label="Email" formControlName="email" type="email" placeholder="your@email.com"required></ion-input>
+
+			</ion-item>
+
+			@if (contactForm.get('email')?.invalid && contactForm.get('email')?.touched) {
+
+				<ion-note color="danger" class="ion-padding-start">
+
+					@if (contactForm.get('email')?.errors?.['required']) {
+
+						<div>Email requerido</div>
+					}
+
+					@if (contactForm.get('email')?.errors?.['email']) {
+
+						<div>Formato de email inválido</div>
+
+					}
+
+				</ion-note>
+
+			}
+
+		</ion-list>
+
+		<ion-button type="submit" expand="block" [disabled]="contactForm.invalid" class="ion-margin-top">
+			Save
+		</ion-button>
+
+	</form>
+
+</ion-content>

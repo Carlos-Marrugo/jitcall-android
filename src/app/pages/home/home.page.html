@@ -1,0 +1,39 @@
+<app-loading></app-loading>
+
+<app-call></app-call>
+
+<app-header title = "Contacts"></app-header>
+
+<ion-content class="ion-padding">
+
+	<div class="search-container">
+
+		<ion-input [(ngModel)]="searchText" (ionInput)="findByName()" placeholder="Search Contact..." clearInput></ion-input>
+
+	</div>
+
+	<div class="contacts-list">
+
+		@if (contacts){
+
+			@for (contact of contacts; track contact.id){
+
+				<app-contact-row [contact]="contact"></app-contact-row>
+
+			}
+
+		}
+
+	</div>
+
+	<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+
+		<ion-fab-button (click) = "navigateToInsert()">
+
+			<ion-icon name="add"></ion-icon>
+
+		</ion-fab-button>
+
+	</ion-fab>
+
+</ion-content>

@@ -1,0 +1,100 @@
+<app-loading></app-loading>
+
+<ion-content class="ion-padding">
+
+	<ion-card class="auth-card">
+
+		<ion-card-header>
+
+			<ion-card-title class="ion-text-center">Create Account</ion-card-title>
+
+		</ion-card-header>
+
+		<ion-card-content>
+
+			<form [formGroup]="logupForm" (ngSubmit)="onSubmit()">
+
+				<ion-list lines="none">
+
+					<ion-item>
+
+						<ion-input label="Name" formControlName="name" placeholder="Jhon"required></ion-input>
+
+					</ion-item>
+					
+					@if (logupForm.controls.name.touched && logupForm.controls.name.errors) {
+
+						<ion-note color="danger" class="ion-padding-start">
+
+							Required field
+
+						</ion-note>
+
+					}
+
+					<ion-item>
+
+						<ion-input label="Surname" formControlName="surname" placeholder="Doe"required></ion-input>
+
+					</ion-item>
+
+					<ion-item>
+
+						<ion-input label="Contact" type="tel" formControlName="contact" placeholder="3001234567"required></ion-input>
+
+					</ion-item>
+
+					<ion-item>
+
+						<ion-input label="Email" type="email" formControlName="email" placeholder="your@email.com" required></ion-input>
+
+					</ion-item>
+
+					<ion-item>
+
+						<ion-input label="Password" type="password" formControlName="password" placeholder="•••••••"required></ion-input>
+
+					</ion-item>
+
+					@if (logupForm.controls.password.touched && logupForm.controls.password.errors) {
+
+						<ion-note color="danger" class="ion-padding-start">
+
+							@if (logupForm.controls.password.errors['required']) {
+
+								<div>Required Field</div>
+
+							}
+
+							@if (logupForm.controls.password.errors['minlength']) {
+
+								<div>Minimum 10 characters</div>
+
+							}
+
+						</ion-note>
+
+					}
+
+				</ion-list>
+
+				<ion-button type="submit" expand="block" [disabled]="logupForm.invalid" class="ion-margin-top">
+					Log Up
+				</ion-button>
+
+			</form>
+
+			<ion-text class="ion-text-center ion-margin-top">
+
+				<p>
+					Do you an account? 
+					<a routerLink="/login" class="ion-text-primary">Log In</a>
+				</p>
+
+			</ion-text>
+
+		</ion-card-content>
+
+	</ion-card>
+
+</ion-content>
