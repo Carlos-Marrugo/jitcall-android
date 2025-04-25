@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:389515216707:android:db1655caab1a0ccd3051f6",
+        "mobilesdk_app_id": "1:389515216707:android:e5f854f5d95310f83051f6",
         "android_client_info": {
-          "package_name": "com.cmarrugo.jitcall"
+          "package_name": "jitcall.videocall"
         }
       },
       "oauth_client": [],
