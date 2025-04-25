@@ -1,105 +1,109 @@
 .contact-container {
-    margin: 12px 0;
-    perspective: 1000px;
+  margin: 1rem 0;
+  perspective: 1000px;
 }
 
 .compact-view {
-    display: flex;
-    align-items: center;
-    padding: 16px;
-    border-radius: 12px;
-    background: linear-gradient(to right, #f8f9fa 0%, #ffffff 100%);
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    
-    &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 4px;
-        height: 100%;
-        background: linear-gradient(to bottom, #6e45e2, #89d4cf);
-        transition: width 0.3s ease;
-    }
-    
-    &:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-        
-        &::before {
-            width: 8px;
-        }
-        
-        .avatar {
-            transform: scale(1.05);
-        }
-    }
-}
+  background: linear-gradient(145deg, #1e1e2e 0%, #2a2a3a 100%);
+  border: 1px solid #4d4dff;
+  box-shadow: 0 5px 15px #4d4dff40;
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  border-radius: 15px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
 
-@keyframes expand {
-    from {
-        opacity: 0;
-        transform: scale(0.95) translateY(10px);
+  &:hover {
+    transform: translateY(-5px) rotateX(5deg);
+    box-shadow: 0 10px 25px #4d4dff80;
+
+    .avatar {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px #4d4dff;
     }
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
+
+    &::after {
+      opacity: 1;
     }
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      135deg,
+      transparent 0%,
+      #4d4dff20 50%,
+      transparent 100%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
 }
 
 .avatar {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    margin-right: 20px;
-    object-fit: cover;
-    border: 3px solid white;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    position: relative;
-    z-index: 1;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 1.5rem;
+  object-fit: cover;
+  border: 2px solid #4d4dff;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .contact-info {
-    flex: 1;
-    
-    h3 {
-        margin: 0;
-        font-size: 1.2rem;
-        color: #2c3e50;
-        font-weight: 600;
-        letter-spacing: -0.3px;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+
+  h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: #ffffff;
+    font-weight: 600;
+    text-shadow: 0 0 10px #ffffff40;
+  }
+
+  .phone {
+    margin: 0.5rem 0 0;
+    font-size: 0.95rem;
+    color: #4d4dff;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    ion-icon {
+      font-size: 1rem;
     }
-    
-    .phone {
-        margin: 6px 0 0;
-        font-size: 0.95rem;
-        color: #7f8c8d;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        
-        &::before {
-            content: '📱';
-            font-size: 0.8rem;
-        }
-    }
+  }
 }
 
 .edit-btn {
-    --color: #6e45e2;
-    --background-hover: rgba(110, 69, 226, 0.1);
-    
-    ion-icon {
-        font-size: 1.5rem;
-        transition: transform 0.2s ease;
-    }
-    
-    &:hover ion-icon {
-        transform: rotate(15deg);
-    }
+  --background: transparent;
+  --color: #4d4dff;
+  --border-radius: 50%;
+  --padding: 0;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #4d4dff;
+  box-shadow: 0 0 10px #4d4dff80;
+  transition: all 0.3s ease;
+
+  ion-icon {
+    font-size: 1.4rem;
+  }
+
+  &:hover {
+    --background: #4d4dff20;
+    transform: rotate(15deg);
+  }
 }
